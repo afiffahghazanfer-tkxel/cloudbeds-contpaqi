@@ -20,7 +20,7 @@ namespace CloudbedsContPAQiIntegration.Models.Cloudbeds
         public decimal BalanceDue { get; set; }
         public decimal GrandTotal { get; set; }
         public string CurrencyCode { get; set; } = string.Empty;
-        public DateTime DateCreated { get; set; }
-        public DateTime DateModified { get; set; }
+        public string DateCreated { get; set; } = string.Empty;
+        public string DateModified { get; set; } = string.Empty;
     }
 }
