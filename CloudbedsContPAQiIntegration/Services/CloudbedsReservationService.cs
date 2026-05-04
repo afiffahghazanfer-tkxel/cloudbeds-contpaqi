@@ -33,7 +33,8 @@ namespace CloudbedsContPAQiIntegration.Services
 
             // Attach API key to every request
             _httpClient.BaseAddress = new Uri(_settings.BaseUrl);
-            _httpClient.DefaultRequestHeaders.Add("X-Api-Key", _settings.ApiKey);
+            _httpClient.DefaultRequestHeaders.Authorization =
+    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _settings.ApiKey);
         }
 
         public async Task<ReservationListResponse> GetReservationsAsync(
@@ -43,7 +44,7 @@ namespace CloudbedsContPAQiIntegration.Services
             try
             {
                 var query = BuildReservationQuery(from, to);
-                var url = $"/getReservations?{query}";
+                var url = $"getReservations?{query}";
 
                 _logger.LogInformation("Fetching reservations from Cloudbeds. URL: {Url}", url);
 
@@ -73,7 +74,7 @@ namespace CloudbedsContPAQiIntegration.Services
         {
             try
             {
-                var url = $"/reservations?reservationID={reservationId}&propertyID={_settings.PropertyId}";
+                var url = $"getReservations?reservationID={reservationId}&propertyID={_settings.PropertyId}";
 
                 var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -92,8 +93,8 @@ namespace CloudbedsContPAQiIntegration.Services
 
         private string BuildReservationQuery(DateTime? from, DateTime? to)
         {
-            var dateFrom = (from ?? DateTime.Today.AddDays(-1)).ToString("MM/dd/yyyy");
-            var dateTo = (to ?? DateTime.Today).ToString("MM/dd/yyyy");
+            var dateFrom = (from ?? DateTime.Today.AddDays(-1)).ToString("yyyy-MM-dd");
+            var dateTo = (to ?? DateTime.Today).ToString("yyyy-MM-dd");
 
             return $"propertyID={_settings.PropertyId}" +
                    $"&checkInFrom={dateFrom}" +

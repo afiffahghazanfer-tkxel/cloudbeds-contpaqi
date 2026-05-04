@@ -19,7 +19,7 @@ builder.Services.AddHttpClient<ICloudbedsReservationService, CloudbedsReservatio
 builder.Services.AddHttpClient<CloudbedsReservationService>(client =>
 {
     // 1. Set the Base URL
-    client.BaseAddress = new Uri("https://hotels.cloudbeds.com/api/v1.3");
+    client.BaseAddress = new Uri("https://hotels.cloudbeds.com/api/v1.3/");
 
     // 2. Add the Authorization Header (Use your cbat_ key)
     client.DefaultRequestHeaders.Authorization =
