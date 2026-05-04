@@ -1,0 +1,6 @@
+@CloudbedsContPAQiIntegration_HostAddress = http://localhost:5138
+
+GET {{CloudbedsContPAQiIntegration_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
