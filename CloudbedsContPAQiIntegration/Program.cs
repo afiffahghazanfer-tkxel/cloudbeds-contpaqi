@@ -1,3 +1,5 @@
+using Azure.Messaging.ServiceBus;
+using CloudbedsContPAQi.WebhookReceiver.Services;
 using CloudbedsContPAQiIntegration.Configuration;
 using CloudbedsContPAQiIntegration.Services;
 
@@ -29,6 +31,13 @@ builder.Services.AddHttpClient<CloudbedsReservationService>(client =>
     client.DefaultRequestHeaders.Accept.Add(
         new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 });
+// Azure Service Bus
+var serviceBusConnectionString = builder.Configuration["ServiceBus:ConnectionString"]
+    ?? throw new InvalidOperationException("ServiceBus:ConnectionString is required.");
+
+builder.Services.AddSingleton(new ServiceBusClient(serviceBusConnectionString));
+builder.Services.AddSingleton<IServiceBusPublisher, ServiceBusPublisher>();
+
 
 var app = builder.Build();
 
